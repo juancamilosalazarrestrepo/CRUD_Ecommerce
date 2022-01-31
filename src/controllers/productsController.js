@@ -67,20 +67,25 @@ const controller = {
      image: productToEdit.image
    };
    let newProducts=products.map(product =>{
-     product.id == productToEdit.id ? product = {...productToEdit} : product;
-    /*  if (product.id == productToEdit.id){
+    /*  product.id == productToEdit.id ? product = {...productToEdit} : product; */
+    if (product.id == productToEdit.id){
        return product = {...productToEdit}
      }
-     return product; */
+     return product;
    });
    fs.writeFileSync(productsFilePath,JSON.stringify(newProducts,null,' '));
-   res.redirect('/products');
+   res.redirect('/');
 
   },
 
   // Delete - Delete one product from DB
   destroy: (req, res) => {
     // Do the magic
+
+    let id = req.params.id;
+    let finalProducts = products.filter(product => product.id != id);
+    fs.writeFileSync(productsFilePath,JSON.stringify(finalProducts,null,' '));
+   res.redirect('/');
   },
 };
 
